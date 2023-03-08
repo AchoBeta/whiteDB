@@ -9,9 +9,34 @@ const fileName = "./file/DB.txt"
 
 var Kvstore *KVstore
 
-func (kv *KVstore) New() error {
-	var err error
-	kv.ReadWriter, err = os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0666)
+func init() {
+	rw, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0666)
+	if err != nil {
+		warn.ERRORF(err.Error())
+		return
+	}
+	Kvstore = &KVstore{
+		ReadWriter: rw,
+		Index:      make(map[string]CommandPos),
+	}
+}
+
+func (kv *KVstore) Seek() (int64, error) {
+	pos, err := kv.ReadWriter.Seek(0, 1)
+	if err != nil {
+		warn.ERRORF(err.Error())
+		return 0, err
+	}
+	return pos, nil
+}
+
+func (kv *KVstore) WriterAt(pos int64, data string) error {
+	_, err := kv.ReadWriter.Seek(pos, 0)
+	if err != nil {
+		warn.ERRORF(err.Error())
+		return err
+	}
+	_, err = kv.ReadWriter.WriteString(data)
 	if err != nil {
 		warn.ERRORF(err.Error())
 		return err
