@@ -1,11 +1,17 @@
 package warn
 
-import "fmt"
+import (
+	"github.com/golang/glog"
+)
 
 func EXIT() {
-	fmt.Printf("White DB EXIT!")
+	glog.Errorf("White DB EXIT!")
+}
+
+func ERRORF(msg string) {
+	glog.Errorf("is error! msg : [%s]", msg)
 }
 
 func ERROR() {
-	fmt.Printf("this is a error command!")
+	glog.Errorf("this is a error command!")
 }

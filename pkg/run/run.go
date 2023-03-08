@@ -1,7 +1,13 @@
 package run
 
-import "fmt"
+import (
+	"whiteDB/pkg/store"
+)
 
-func ExecSet() {
-	fmt.Printf("%d", 123)
+func ExecSet(key, value string) {
+	set := &store.Set{
+		Key:   key,
+		Value: value,
+	}
+	wr := store.Kvstore.Writer
 }

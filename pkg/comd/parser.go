@@ -8,6 +8,8 @@ import (
 
 	"whiteDB/pkg/run"
 	"whiteDB/pkg/warn"
+
+	"github.com/golang/glog"
 )
 
 const (
@@ -33,20 +35,20 @@ func ExecComd() {
 			warn.EXIT()
 			os.Exit(0)
 		}
-		fmt.Printf("%s \n", line)
 		fmt.Printf("WhiteDB >> ")
+		glog.Flush()
 	}
 }
 
 func parser(exec string) {
 	str := strings.Fields(exec)
-	cmd, ok := commandMap[str[0]]
+	cmd, ok := commandMap[strings.ToUpper(str[0])]
 	if !ok {
 		cmd = NONE
 	}
 	switch cmd {
 	case SET:
-		run.ExecSet()
+		run.ExecSet(str[1], str[2])
 	case REMOVE:
 	case GET:
 	default:
