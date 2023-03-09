@@ -11,7 +11,7 @@ var Kvstore *KVstore
 
 func init() {
 	isExist()
-	rw, err := os.OpenFile(fileName, os.O_CREATE|os.O_RDWR, 0754)
+	rw, err := os.OpenFile(fileName, os.O_APPEND|os.O_RDWR, 0754)
 	if err != nil {
 		warn.ERRORF(err.Error())
 		return

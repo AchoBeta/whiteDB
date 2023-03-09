@@ -3,6 +3,7 @@ package run
 import (
 	"encoding/json"
 	"fmt"
+
 	"whiteDB/pkg/store"
 	"whiteDB/pkg/warn"
 )
@@ -18,7 +19,8 @@ func ExecSet(key, value string) {
 		return
 	}
 
-	data, err := json.MarshalIndent(set, "", "\t")
+	data, err := json.Marshal(set)
+	data = append(data, '\n')
 	if err != nil {
 		warn.ERRORF(err.Error())
 		return
@@ -37,7 +39,8 @@ func ExecRemove(key string) {
 	rm := &store.Remove{
 		Key: key,
 	}
-	data, err := json.MarshalIndent(rm, "", "\t")
+	data, err := json.Marshal(rm)
+	data = append(data, '\n')
 	if err != nil {
 		warn.ERRORF(err.Error())
 		return
