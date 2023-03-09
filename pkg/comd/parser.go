@@ -23,6 +23,7 @@ var commandMap map[string]int = map[string]int{
 	"SET":    SET,
 	"REMOVE": REMOVE,
 	"GET":    GET,
+	"RM":     REMOVE,
 }
 
 func ExecComd() {
@@ -50,8 +51,9 @@ func parser(exec string) {
 	case SET:
 		run.ExecSet(str[1], str[2])
 	case REMOVE:
+		run.ExecRemove(str[1])
 	case GET:
 	default:
-		warn.ERROR()
+		warn.ERRORF(str[0] + " is error command !")
 	}
 }

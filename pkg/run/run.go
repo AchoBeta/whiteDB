@@ -30,3 +30,18 @@ func ExecSet(key, value string) {
 		Len: uint64(npos - pos),
 	}
 }
+
+func ExecRemove(key string) {
+	kv := store.Kvstore
+	rm := &store.Remove{
+		Key: key,
+	}
+	data, err := json.MarshalIndent(rm, "", "\t")
+	if err != nil {
+		warn.ERRORF(err.Error())
+		return
+	}
+	kv.Writer(string(data))
+	// 索引中删除
+	delete(kv.Index, key)
+}
