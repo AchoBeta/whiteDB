@@ -13,6 +13,11 @@ type Remove struct {
 	Key string
 }
 
+type Get struct {
+	Key   string
+	Value interface{}
+}
+
 type KVstore struct {
 	ReadWriter *os.File
 	Index      map[string]CommandPos

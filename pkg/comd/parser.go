@@ -49,10 +49,15 @@ func parser(exec string) {
 	}
 	switch cmd {
 	case SET:
+		if len(str) < 3 {
+			fmt.Printf("Set must hava a value!\n")
+			break
+		}
 		run.ExecSet(str[1], str[2])
 	case REMOVE:
 		run.ExecRemove(str[1])
 	case GET:
+		run.ExecGet(str[1])
 	default:
 		warn.ERRORF(str[0] + " is error command !")
 	}

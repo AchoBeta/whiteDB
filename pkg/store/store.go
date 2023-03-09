@@ -75,17 +75,13 @@ func (kv *KVstore) Writer(data string) (int64, error) {
 	return pos, nil
 }
 
-func (kv *KVstore) ReadAt(offset int64) (string, int64, error) {
-	data := make([]byte, 1024)
+func (kv *KVstore) ReadAt(offset int64, len int) ([]byte, error) {
+	data := make([]byte, len)
 	n, err := kv.ReadWriter.ReadAt(data, offset)
 	if err != nil {
-		return "", 0, err
+		return nil, err
 	}
-	pos, err := kv.ReadWriter.Seek(0, 1)
-	if err != nil {
-		return "", 0, err
-	}
-	return string(data[:n]), pos, nil
+	return data[:n], nil
 
 }
 

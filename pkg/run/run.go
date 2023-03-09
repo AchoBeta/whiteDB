@@ -2,6 +2,7 @@ package run
 
 import (
 	"encoding/json"
+	"fmt"
 	"whiteDB/pkg/store"
 	"whiteDB/pkg/warn"
 )
@@ -44,4 +45,26 @@ func ExecRemove(key string) {
 	kv.Writer(string(data))
 	// 索引中删除
 	delete(kv.Index, key)
+}
+
+func ExecGet(key string) {
+	kv := store.Kvstore
+	var val string = "nil"
+	// 从索引中取出数据
+	if cmd, ok := kv.Index[key]; ok {
+		pos, len := cmd.Pos, cmd.Len
+		data, err := kv.ReadAt(int64(pos), int(len))
+		if err != nil {
+			warn.ERRORF(err.Error())
+			return
+		}
+		get := &store.Get{}
+		err = json.Unmarshal(data, get)
+		if err != nil {
+			warn.ERRORF(err.Error())
+			return
+		}
+		val = get.Value.(string)
+	}
+	fmt.Printf(val + "\n")
 }
