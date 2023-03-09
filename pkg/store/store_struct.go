@@ -4,6 +4,13 @@ import (
 	"os"
 )
 
+const (
+	KB      = 1024
+	MB      = 1024 * 1024
+	LIMIT   = 3 * MB
+	MAX_LEN = 2*LIMIT + MB // 3MB
+)
+
 type Set struct {
 	Key   string
 	Value string
