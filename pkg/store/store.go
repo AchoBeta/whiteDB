@@ -5,12 +5,13 @@ import (
 	"whiteDB/pkg/warn"
 )
 
-const fileName = "./file/DB.txt"
+const fileName = "./datafile/DB.txt"
 
 var Kvstore *KVstore
 
 func init() {
-	rw, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0666)
+	isExist()
+	rw, err := os.OpenFile(fileName, os.O_CREATE|os.O_RDWR, 0754)
 	if err != nil {
 		warn.ERRORF(err.Error())
 		return
@@ -18,6 +19,22 @@ func init() {
 	Kvstore = &KVstore{
 		ReadWriter: rw,
 		Index:      make(map[string]CommandPos),
+	}
+}
+
+func isExist() {
+	_, err := os.Stat(fileName)
+	if os.IsNotExist(err) {
+		err := os.MkdirAll("./datafile", 0755)
+		if err != nil {
+			warn.ERRORF(err.Error())
+			return
+		}
+		_, err = os.Create(fileName)
+		if err != nil {
+			warn.ERRORF(err.Error())
+			return
+		}
 	}
 }
 
