@@ -54,7 +54,6 @@ func isExist() {
 
 // SwitchFile 切换操作的文件
 func (kv *KVstore) SwitchFile() {
-	kv.ReadWriter.Close()
 	rw := open(fileCollection[kv.CurPage])
 	if rw == nil {
 		return

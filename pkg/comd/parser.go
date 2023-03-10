@@ -18,15 +18,17 @@ const (
 	SET
 	REMOVE
 	GET
+	COMPACT
 	EXIT
 )
 
 var commandMap map[string]int = map[string]int{
-	"SET":    SET,
-	"REMOVE": REMOVE,
-	"GET":    GET,
-	"RM":     REMOVE,
-	"EXIT":   EXIT,
+	"SET":     SET,
+	"REMOVE":  REMOVE,
+	"GET":     GET,
+	"RM":      REMOVE,
+	"EXIT":    EXIT,
+	"COMPACT": COMPACT,
 }
 
 func ExecComd() {
@@ -55,6 +57,8 @@ func parser(exec string) {
 		run.ExecRemove(str[1])
 	case GET:
 		run.ExecGet(str[1])
+	case COMPACT:
+		store.Compact()
 	case EXIT:
 		warn.EXIT()
 		os.Exit(0)
