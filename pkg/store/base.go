@@ -15,19 +15,19 @@ const (
 
 const (
 	dataFile    = "./datafile/DB_data.txt"
-	tempFile    = "./datafile/DB_temp.txt"
 	compactFile = "./datafile/DB_compact.txt"
+	tempFile    = "./datafile/DB_temp.txt"
 )
 
 const (
 	DATA_FILE_PAGE    int = 0
-	TEMP_FILE_PAGE    int = 1
-	COMPACT_FILE_PAGE int = 2
+	COMPACT_FILE_PAGE int = 1
+	TEMP_FILE_PAGE    int = 2
 )
 
 /** 变量定义 **/
 
-var fileCollection = []string{dataFile, tempFile, compactFile}
+var fileCollection = []string{dataFile, compactFile, tempFile}
 
 /** 结构体定义 **/
 

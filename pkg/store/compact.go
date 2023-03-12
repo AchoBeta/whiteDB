@@ -15,7 +15,7 @@ func Compact() {
 	defer lock.Unlock()
 	// 切换到合并文件
 	kv := Kvstore
-	kv.CurPage = COMPACT_FILE_PAGE
+	kv.CurPage = getRWFilePage(kv.CurPage)
 	kv.SwitchFile()
 
 	for k, row := range ri {
@@ -37,6 +37,11 @@ func Compact() {
 			Page: uint(kv.CurPage),
 		}
 	}
+	err := os.Truncate(rw.Name(), 0) // 清空
+	if err != nil {
+		warn.ERRORF(err.Error())
+		return
+	}
 }
 
 func read(rw *os.File, pos int64, len int) []byte {
@@ -47,4 +52,9 @@ func read(rw *os.File, pos int64, len int) []byte {
 		return nil
 	}
 	return data[:n]
+}
+
+func getRWFilePage(page int) int {
+	// fmt.Printf("page:%d, page ^= %d", page, page^1)
+	return page ^ 1
 }
