@@ -83,3 +83,8 @@ func ExecGet(key string) {
 	}
 	fmt.Printf(val + "\n")
 }
+
+func ExecLen() {
+	kv := store.Kvstore
+	fmt.Printf("%d\n", len(kv.Index))
+}

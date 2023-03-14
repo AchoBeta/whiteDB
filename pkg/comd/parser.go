@@ -13,24 +13,6 @@ import (
 	"github.com/golang/glog"
 )
 
-const (
-	NONE int = iota
-	SET
-	REMOVE
-	GET
-	COMPACT
-	EXIT
-)
-
-var commandMap map[string]int = map[string]int{
-	"SET":     SET,
-	"REMOVE":  REMOVE,
-	"GET":     GET,
-	"RM":      REMOVE,
-	"EXIT":    EXIT,
-	"COMPACT": COMPACT,
-}
-
 func ExecComd() {
 	input := bufio.NewScanner(os.Stdin)
 	fmt.Printf("WhiteDB >> ")
@@ -53,6 +35,8 @@ func parser(exec string) {
 		if checkSet(str) {
 			run.ExecSet(str[1], str[2])
 		}
+	case LEN:
+		run.ExecLen()
 	case REMOVE:
 		run.ExecRemove(str[1])
 	case GET:
