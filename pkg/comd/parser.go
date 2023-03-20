@@ -1,25 +1,24 @@
 package comd
 
 import (
+	"NekoKV/pkg/run"
+	"NekoKV/pkg/store"
+	"NekoKV/pkg/warn"
 	"bufio"
 	"fmt"
 	"os"
 	"strings"
-
-	"whiteDB/pkg/run"
-	"whiteDB/pkg/store"
-	"whiteDB/pkg/warn"
 
 	"github.com/golang/glog"
 )
 
 func ExecComd() {
 	input := bufio.NewScanner(os.Stdin)
-	fmt.Printf("WhiteDB >> ")
+	fmt.Printf("NekoKV >> ")
 	for input.Scan() {
 		line := input.Text()
 		parser(line)
-		fmt.Printf("WhiteDB >> ")
+		fmt.Printf("NekoKV >> ")
 		glog.Flush()
 	}
 }

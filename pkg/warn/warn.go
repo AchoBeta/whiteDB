@@ -7,7 +7,7 @@ import (
 )
 
 func EXIT() {
-	fmt.Printf(">>>>>>>>>> White DB EXIT!\n")
+	fmt.Printf(">>>>>>>>>> NekoKV EXIT!\n")
 }
 
 func ERRORF(msg string) {
