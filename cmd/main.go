@@ -1,9 +1,9 @@
 package main
 
 import (
+	"NekoKV/pkg/comd"
+	"NekoKV/pkg/store"
 	"flag"
-	"whiteDB/pkg/comd"
-	"whiteDB/pkg/store"
 )
 
 func main() {

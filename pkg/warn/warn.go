@@ -1,11 +1,13 @@
 package warn
 
 import (
+	"fmt"
+
 	"github.com/golang/glog"
 )
 
 func EXIT() {
-	glog.Errorf("White DB EXIT!")
+	fmt.Printf(">>>>>>>>>> NekoKV EXIT!\n")
 }
 
 func ERRORF(msg string) {

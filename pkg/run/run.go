@@ -1,11 +1,15 @@
 package run
 
 import (
+	"NekoKV/pkg/store"
+	"NekoKV/pkg/warn"
 	"encoding/json"
 	"fmt"
+	"sync"
+)
 
-	"whiteDB/pkg/store"
-	"whiteDB/pkg/warn"
+var (
+	lock sync.Mutex
 )
 
 func ExecSet(key, value string) {
@@ -14,6 +18,9 @@ func ExecSet(key, value string) {
 		Value: value,
 	}
 	kv := store.Kvstore
+	// lock
+	lock.Lock()
+	defer lock.Unlock()
 	pos, err := kv.Seek()
 	if err != nil {
 		return
@@ -29,8 +36,9 @@ func ExecSet(key, value string) {
 	// 记录索引
 	npos, _ := kv.Seek()
 	kv.Index[key] = store.CommandPos{
-		Pos: uint64(pos),
-		Len: uint64(npos - pos),
+		Pos:  uint64(pos),
+		Len:  uint64(npos - pos),
+		Page: uint(kv.CurPage),
 	}
 }
 
@@ -45,6 +53,9 @@ func ExecRemove(key string) {
 		warn.ERRORF(err.Error())
 		return
 	}
+	// lock
+	lock.Lock()
+	defer lock.Unlock()
 	kv.Writer(string(data))
 	// 索引中删除
 	delete(kv.Index, key)
@@ -70,4 +81,9 @@ func ExecGet(key string) {
 		val = get.Value.(string)
 	}
 	fmt.Printf(val + "\n")
+}
+
+func ExecLen() {
+	kv := store.Kvstore
+	fmt.Printf("%d\n", len(kv.Index))
 }

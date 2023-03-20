@@ -1,4 +1,4 @@
-module whiteDB
+module NekoKV
 
 go 1.18
 
