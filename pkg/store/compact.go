@@ -28,6 +28,9 @@ func Compact() {
 			warn.ERRORF(err.Error())
 			return
 		}
+		if (data[len(data)-1]) != '\n' {
+			data = append(data, '\n')
+		}
 		kv.WriterAt(pos, string(data))
 		// 记录新的索引
 		newpos, _ := kv.Seek()

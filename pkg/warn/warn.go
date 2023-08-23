@@ -17,3 +17,7 @@ func ERRORF(msg string) {
 func ERROR() {
 	glog.Errorf("this is a error command!")
 }
+
+func DEBUG(f interface{}) {
+	glog.Infof("%+v\n", f)
+}

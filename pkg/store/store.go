@@ -117,3 +117,8 @@ func (kv *KVstore) Close() error {
 	}
 	return nil
 }
+
+func (kv *KVstore) SwapCurPage() error {
+	kv.CurPage = kv.CurPage ^ 1
+	return nil
+}
